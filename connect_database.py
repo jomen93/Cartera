@@ -1,21 +1,12 @@
-# *****************************************************************************
-#  @file connect_database.py
-#  
-#  @date:   13/05/2021
+#  ===========================================================================
+#  @file:   connect_database.py
+#  @brief:  Connecting to SQL database from python saved in azure cloud
 #  @author: Johan Mendez
-#  @email:  johan.mendez@dtabiz.co
+#  @date:   13/05/2021
+#  @email:  johan.mendez@databiz.co
 #  @status: Debug
-# 
-#  @brief
-#  
-# 
-# 
-#  @detail
-# 
-#
-# 
-#  *****************************************************************************
-
+#  @detail: version 1.0
+#  ===========================================================================
 import pyodbc
 
 
