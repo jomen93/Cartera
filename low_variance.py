@@ -1,20 +1,12 @@
-# *****************************************************************************
-#  @file low_variance.py
-#  
-#  @date:   14/05/2021
+#  ===========================================================================
+#  @file:   low_variance.py
+#  @brief:  Eliminate the low variance columns given a threshold 
 #  @author: Johan Mendez
-#  @email:  johan.mendez@dtabiz.co
+#  @date:   14/05/2021
+#  @email:  johan.mendez@databiz.co
 #  @status: Debug
-# 
-#  @brief
-#  
-# 
-# 
-#  @detail
-# 
-#
-# 
-#  *****************************************************************************
+#  @detail: version 1.0
+#  ===========================================================================
 
 from sklearn.feature_selection import VarianceThreshold
 

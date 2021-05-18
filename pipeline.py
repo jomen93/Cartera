@@ -1,3 +1,14 @@
+#  ===========================================================================
+#  @file: pipeline.py
+#  @brief: Main program
+#  @author: Johan Mendez
+#  @date:   13/05/2021
+#  @email:  johan.mendez@databiz.co
+#  @status: Debug
+#  @detail: version 1.0
+#  ===========================================================================
+
+
 from connect_database import connect
 import pandas as pd
 
