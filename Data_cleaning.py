@@ -12,9 +12,11 @@ import pandas as pd
 import numpy as np 
 from sklearn.preprocessing import (OneHotEncoder, StandardScaler)
 
+import parameter_reduction
 
 def Cleaning(data):
 
+	print("	Creating synthetic variables ...")
 	# Definition "FECHA_CONSULTADA"
 	data["FECHA_CONSULTADA"] = pd.to_datetime(data["ID_FECHA_CONSULTADA"].astype("int").astype("str"), format = "%Y-%m-%d")
 
@@ -66,28 +68,31 @@ def Cleaning(data):
                 "NIVEL_RIESGO_CLIENTE", 
                 "CAPACIDAD_CLIENTE", 
                 "CAPITAL_CLIENTE"
-                ]
+	]
 
+	print("	Encoding categorical variables ...")
 	enc = OneHotEncoder(handle_unknown='ignore')
 	enc.fit(data[categorical_model])
 	X = enc.transform(data[categorical_model]).toarray()
 
 	# Numerics columns
 	columns_numeric = data.select_dtypes(include=["int", "float"]).columns
-	# Conversión del tipo de datos pandas.core.indexes.base.Index a lista de python
+	# Converting pandas.core.indexes.base.Index data type to python list
 	aux_num = list(columns_numeric)
-	# Se descartan las columnas categoricas
+	# Categorical columns are discarded
 	aux_num = [i for i in aux_num if i not in categorical_model]
-	# Se agrega la variable respuesta para ver la correlación
-	# aux_num = aux_num + ["GESTION_COBRO"]
+	# Numerical variables
 	X_n = data[aux_num]
-
+	
+	# Outliers selection
+	print("	Outliers selection ...")
+	Outliers_columns = ["CANTIDAD_CUOTAS_PAGADAS", "CANTIDAD_FACTURAS", "DIAS_MORA"]
+	X_n[Outliers_columns] = parameter_reduction.Remove_Outliers(X_n[Outliers_columns])
 
 	NaN_columns = X_n.columns[X_n.isna().any()].tolist()
 	aux_num = [i for i in aux_num if i not in NaN_columns]
 	aux_num.remove("ID_CONTRATO")
 	aux_num.remove("ID_CLIENTE")
-	x_n = data[aux_num]
 	Xn  = X_n.drop(["GESTION_COBRO"], axis=1)
 	y   = X_n["GESTION_COBRO"].to_numpy()
 	X   = np.concatenate((X, Xn.to_numpy()),axis=1) 

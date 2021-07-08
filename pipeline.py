@@ -11,23 +11,11 @@
 
 from connect_database import connect
 import pandas as pd
-from sklearn.metrics import (mean_squared_log_error, 
-                             mean_squared_error,
-                             r2_score,
-                             mean_absolute_error,
-                             accuracy_score,
-                             recall_score,
-                             f1_score, precision_score,
-                             plot_confusion_matrix,
-                             roc_curve, auc,confusion_matrix,
-                             cohen_kappa_score
-                            )
-import xgboost as xgb
-from xgboost import plot_importance
-from xgboost import XGBClassifier
 
 import Data_cleaning
 import split_data
+import metrics
+import models
 
 download_data = False
 
@@ -74,31 +62,11 @@ print("% de datos en el conjunto de test          = {:.2f}".format(len(X_test)/l
 
 
 # Model Construction
-params = {"booster":"gbtree", 
-          "eta": 0.05, 
-          "alpha":0.5,
-          "gamma":5,
-          "silent":1,
-          "objective":"binary:logistic",
-          "eval_metric":"auc",
-          "colsample_bytree":0.8,
-          "subsample":1,
-          "use_label_encoder":False,
-         }
+print("Training model ...")
+y_pred = models.XgboostClassifier(X_train, y_train, X_test, y_test, X_val)
 
-xgb_model = XGBClassifier()
-xgb_model.fit(X_train, 
-              y_train,
-              eval_set=[(X_train, y_train),(X_test, y_test)],
-              eval_metric=["error", "auc"],
-              early_stopping_rounds=5
-             )
-
-print("Accuracy:  {}".format(accuracy_score(y_test, xgb_model.predict(X_test))))
-print('Recall:    {}'.format(recall_score(y_test, xgb_model.predict(X_test))))
-print('F1-Score:  {}'.format(f1_score(y_test, xgb_model.predict(X_test))))
-print('Precision: {}'.format(precision_score(y_test, xgb_model.predict(X_test), zero_division="warn")))
-print('Kappa:     {}'.format(cohen_kappa_score(y_test, xgb_model.predict(X_test))))
+metrics.metrics(y_val, y_pred)
+metrics.plot_confusion_matrix(y_val, y_pred)
 
 
 
