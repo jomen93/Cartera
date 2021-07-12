@@ -39,7 +39,7 @@ def Cleaning(data):
 	data["GESTION_COBRO"] = (data["DIAS_MORA"] > 30).astype(int)
 	# The name of response variable is changed
 	# data.rename(columns={"GESTION_COBRO": "RESPONSE"}, inplace=True)
-	
+
 	# Definition "SALDADA"
 	data["SALDADA"] = (~data["FECHA_PAGO"].isna()).astype("int")
 
@@ -49,25 +49,25 @@ def Cleaning(data):
 			"NIVEL_RIESGO_CLIENTE", "CAPACIDAD_CLIENTE", "CAPITAL_CLIENTE",
 			"CIUDAD", "PROVINCIA_ESTADO_DEPARTAMENTO", "PLAZO_PACTADO",
 			"CANTIDAD_CUOTAS_PAGADAS", "CANTIDAD_CUOTAS_PENDIENTES",
-        	"PORCENTAJE_INTERES_CORRIENTE_EA", "PORCENTAJE_INTERES_MORA_EA", 
-        	"SALDO_CAPITAL_CONTRATO", "VALOR_INICIAL", "CANTIDAD_FACTURAS",
-        	"ID_CONTRATO", "ID_CLIENTE", "DIAS_MORA", "GESTION_COBRO", 
-        	"DIAS_CONOCIMIENTO_FACTURA","SALDADA"]
+	    	"PORCENTAJE_INTERES_CORRIENTE_EA", "PORCENTAJE_INTERES_MORA_EA", 
+	    	"SALDO_CAPITAL_CONTRATO", "VALOR_INICIAL", "CANTIDAD_FACTURAS",
+	    	"ID_CONTRATO", "ID_CLIENTE", "DIAS_MORA", "GESTION_COBRO", 
+	    	"DIAS_CONOCIMIENTO_FACTURA","SALDADA"]
 
 	data = data[keys]	
 
 	# Encode categorical variables
 	categorical_model = [
-                "TIPO_IDENTIFICACION", 
-                "SEXO", 
-                "REGION", 
-                "CIUDAD", 
-                "PROVINCIA_ESTADO_DEPARTAMENTO",
-                "REPUTACION_CLIENTE", 
-                "GARANTIA_COLATERAL_CLIENTE", 
-                "NIVEL_RIESGO_CLIENTE", 
-                "CAPACIDAD_CLIENTE", 
-                "CAPITAL_CLIENTE"
+	            "TIPO_IDENTIFICACION", 
+	            "SEXO", 
+	            "REGION", 
+	            "CIUDAD", 
+	            "PROVINCIA_ESTADO_DEPARTAMENTO",
+	            "REPUTACION_CLIENTE", 
+	            "GARANTIA_COLATERAL_CLIENTE", 
+	            "NIVEL_RIESGO_CLIENTE", 
+	            "CAPACIDAD_CLIENTE", 
+	            "CAPITAL_CLIENTE"
 	]
 
 	print("	Encoding categorical variables ...")
@@ -83,7 +83,7 @@ def Cleaning(data):
 	aux_num = [i for i in aux_num if i not in categorical_model]
 	# Numerical variables
 	X_n = data[aux_num]
-	
+
 	# Outliers selection
 	print("	Outliers selection ...")
 	Outliers_columns = ["CANTIDAD_CUOTAS_PAGADAS", "CANTIDAD_FACTURAS", "DIAS_MORA"]
@@ -94,8 +94,11 @@ def Cleaning(data):
 	aux_num.remove("ID_CONTRATO")
 	aux_num.remove("ID_CLIENTE")
 	Xn  = X_n.drop(["GESTION_COBRO"], axis=1)
-	y   = X_n["GESTION_COBRO"].to_numpy()
-	X   = np.concatenate((X, Xn.to_numpy()),axis=1) 
+
+
+
+	y = X_n["GESTION_COBRO"].to_numpy()
+	X = np.concatenate((X, Xn.to_numpy()),axis=1) 
 	
 	return X, y
 
