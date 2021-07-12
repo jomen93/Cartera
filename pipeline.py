@@ -11,11 +11,15 @@
 
 from connect_database import connect
 import pandas as pd
+import warnings
 
 import Data_cleaning
 import split_data
 import metrics
 import models
+from models import TSVMClassifier
+
+warnings.filterwarnings("ignore")
 
 download_data = False
 
@@ -48,25 +52,28 @@ else:
 
 print("Cleaning data ...")
 X, y = Data_cleaning.Cleaning(data)
-print("Tamaño de la matriz de entrenamiento = {}".format(X.shape))
-print("Tamaño del vector objetivo= {}".format(y.shape))
+print("Shape Training data = {}".format(X.shape))
+print("Shape Objective vector = {}".format(y.shape))
 
 # Split data
 print("Spliting data ...")
 X_train, X_test, X_val, y_train, y_test, y_val = split_data.split_stratified(X, y)
 
 
-print("% de datos en el conjunto de entrenamiento = {:.2f}".format(len(X_train)/len(X)*100))
-print("% de datos en el conjunto de validación    = {:.2f}".format(len(X_val)/len(X)*100))
-print("% de datos en el conjunto de test          = {:.2f}".format(len(X_test)/len(X)*100))
+print("% train data      = {:.2f}".format(len(X_train)/len(X)*100))
+print("% validation data = {:.2f}".format(len(X_val)/len(X)*100))
+print("% test data       = {:.2f}".format(len(X_test)/len(X)*100))
 
 
 # Model Construction
 print("Training model ...")
 y_pred = models.XgboostClassifier(X_train, y_train, X_test, y_test, X_val)
+# y_pred = models.Logistic_Regression(X_train, y_train, X_val)
+# model = TSVMClassifier()
+# model.fit(X_train, y_train)
 
-metrics.metrics(y_val, y_pred)
-metrics.plot_confusion_matrix(y_val, y_pred)
+# metrics.metrics(y_val, y_pred)
+# metrics.plot_confusion_matrix(y_val, y_pred)
 
 
 
