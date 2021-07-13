@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 import seaborn as sns 
 
+import matplotlib.pyplot as plt
+
 from sklearn.metrics import (mean_squared_log_error, 
                              mean_squared_error,
                              r2_score,
@@ -33,3 +35,28 @@ def plot_confusion_matrix(y_test, y_pred):
         )
     plt.title("confusion Matrix Classifier")
     plt.savefig("confusion_matrix")
+
+def plot_XGboost(results):
+    epoch = len(results["validation_0"]["error"])
+    x_axis = range(0, epoch)
+
+    fig = plt.figure(figsize=(18,5))
+
+    plt.subplot(121)
+    plt.plot(x_axis, results["validation_0"]["auc"], "b--",label="Train")
+    plt.plot(x_axis, results["validation_1"]["auc"], "lightcoral", label="Test")
+    plt.legend()
+    plt.ylabel("AUC")
+    plt.xlabel("épocas")
+    plt.title("XGBoost AUC")
+    plt.grid(color='k', alpha=0.5, linestyle='dashed', linewidth=0.9)
+
+    plt.subplot(122)
+    plt.plot(x_axis, results["validation_0"]["error"], "b--",label="Train")
+    plt.plot(x_axis, results["validation_1"]["error"], "lightcoral",label="Test")
+    plt.legend()
+    plt.ylabel("AUC")
+    plt.title("XGBoost Clasification Error")
+    plt.grid(color='k', alpha=0.5, linestyle='dashed', linewidth=0.9)
+
+    plt.savefig("performance_curves")
