@@ -43,6 +43,10 @@ def Cleaning(data):
 	# Definition "SALDADA"
 	data["SALDADA"] = (~data["FECHA_PAGO"].isna()).astype("int")
 
+	# Outliers selection
+	print("	Outliers selection ...")
+	Outliers_columns = ["CANTIDAD_CUOTAS_PAGADAS", "CANTIDAD_FACTURAS", "DIAS_MORA"]
+	# data[Outliers_columns] = parameter_reduction.Remove_Outliers(data[Outliers_columns])
 
 	keys = ["NUMERO_CONTRATO", "TIPO_IDENTIFICACION", "IDENTIFICACION", "SEXO", 
 			"INGRESO", "REGION", "REPUTACION_CLIENTE", "GARANTIA_COLATERAL_CLIENTE", 
@@ -84,18 +88,18 @@ def Cleaning(data):
 	# Numerical variables
 	X_n = data[aux_num]
 
-	# Outliers selection
-	print("	Outliers selection ...")
-	Outliers_columns = ["CANTIDAD_CUOTAS_PAGADAS", "CANTIDAD_FACTURAS", "DIAS_MORA"]
-	X_n[Outliers_columns] = parameter_reduction.Remove_Outliers(X_n[Outliers_columns])
 
+	# Columns with NaN are ignored
 	NaN_columns = X_n.columns[X_n.isna().any()].tolist()
+	# Removed from the columns
 	aux_num = [i for i in aux_num if i not in NaN_columns]
+
 	aux_num.remove("ID_CONTRATO")
 	aux_num.remove("ID_CLIENTE")
+	X_n = data[aux_num]
+	
+
 	Xn  = X_n.drop(["GESTION_COBRO"], axis=1)
-
-
 
 	y = X_n["GESTION_COBRO"].to_numpy()
 	X = np.concatenate((X, Xn.to_numpy()),axis=1) 
