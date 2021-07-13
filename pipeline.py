@@ -17,7 +17,6 @@ import Data_cleaning
 import split_data
 import metrics
 import models
-from models import TSVMClassifier
 
 warnings.filterwarnings("ignore")
 
@@ -67,13 +66,12 @@ print("% test data       = {:.2f}".format(len(X_test)/len(X)*100))
 
 # Model Construction
 print("Training model ...")
-y_pred = models.XgboostClassifier(X_train, y_train, X_test, y_test, X_val)
-# y_pred = models.Logistic_Regression(X_train, y_train, X_val)
-# model = TSVMClassifier()
-# model.fit(X_train, y_train)
+y_pred, results = models.XgboostClassifier(X_train, y_train, X_test, y_test, X_val)
 
-# metrics.metrics(y_val, y_pred)
-# metrics.plot_confusion_matrix(y_val, y_pred)
+print("Calculating metrics ...")
 
+metrics.metrics(y_val, y_pred)
+metrics.plot_confusion_matrix(y_val, y_pred)
+metrics.plot_XGboost(results)
 
 
