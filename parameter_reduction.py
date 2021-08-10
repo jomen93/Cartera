@@ -10,6 +10,8 @@
 
 from sklearn.feature_selection import VarianceThreshold
 from sklearn.ensemble import IsolationForest
+from sklearn.decomposition import PCA
+
 import pandas as pd
 import numpy as np
 
@@ -44,3 +46,14 @@ def remove_records_with_outliers(dataset, ignore_columns, stds=5):
         series  = dataset[col]
         dataset = dataset[~(np.abs(series-series.mean()) > stds*series.std())]
         return datasetc
+
+
+def Principal_components(data1, data2, components):
+    pca_model = PCA( n_components = components)
+    X_train_reduc = pca_model.fit_transform(data1)
+    X_test_pca    = pca_model.fit_transform(data2)
+    X_train_reduc = pd.DataFrame( X_train_reduc, columns = ['PC_{}'.format(i) for i in range(components)])    
+    X_test_pca = pd.DataFrame( X_test_pca, columns = ['PC_{}'.format(i) for i in range(components)])    
+
+    return X_train_reduc, X_test_pca
+
