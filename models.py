@@ -17,6 +17,10 @@ from sklearn.base import BaseEstimator, ClassifierMixin
 from sklearn.linear_model import LogisticRegression
 from sklearn import svm
 
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras import layers
+
 def XgboostClassifier(X_train, y_train, X_test, y_test, X_val):
 	
 	params = {"booster":"dart", 
@@ -46,9 +50,29 @@ def XgboostClassifier(X_train, y_train, X_test, y_test, X_val):
 
 	return xgb_model.predict(X_val), results
 
-def unbalanced_randomforest():
-	print("Process Started ...")
-	print(" ")
-	
+def NN(components, predict_range):
+    model = keras.Sequential([
+        layers.Dense(128, activation="relu", input_shape=[components]),
+        layers.Dropout(0.6),
+        layers.BatchNormalization(),
+        layers.Dense(64, activation='relu'),
+        layers.Dropout(0.6),
+        layers.Dense(128, activation='relu'),
+        layers.Dense( predict_range, activation = 'softmax' )
+        ])
+
+    model.compile(
+        loss="categorical_crossentropy",
+        optimizer="adam",
+        metrics=["accuracy"]
+        )
+
+    return model 
+
+
+
+
+
+
 
 
