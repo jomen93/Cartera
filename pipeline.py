@@ -11,6 +11,7 @@
 
 from connect_database import connect
 import pandas as pd
+import pickle5 as pickle
 import warnings
 
 import Data_cleaning
@@ -20,16 +21,19 @@ import models
 
 warnings.filterwarnings("ignore")
 
+# Flag to download the data
 download_data = False
 
-# Database server credentials
-server   = "carterasvr.database.windows.net"
-database = "cartera"
-username = "consulta"
-password = "D4t4b1z2.123"
 
 
 if download_data == True:
+     
+     # Database server credentials
+     server   = "carterasvr.database.windows.net"
+     database = "cartera"
+     username = "consulta"
+     password = "D4t4b1z2.123"
+
      # Database conections
      cnxn = connect(server, database, username, password)
 
@@ -47,7 +51,14 @@ if download_data == True:
      data.to_pickle("data.ftr")
 else:
      print("Loading data ...")
-     data = pd.read_pickle("data.ftr")
+     name_pickle = "data.ftr"
+     
+     with open("data.ftr", "rb") as fh:
+          data = pickle.load(fh)
+     
+     data = pd.DataFrame(data)
+
+
 
 print("Cleaning data ...")
 X, y = Data_cleaning.Cleaning(data)
