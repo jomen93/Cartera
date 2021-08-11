@@ -60,3 +60,23 @@ def plot_XGboost(results):
     plt.grid(color='k', alpha=0.5, linestyle='dashed', linewidth=0.9)
 
     plt.savefig("performance_curves")
+
+def performance_curve(data):
+    fig = plt.figure(figsize=(15, 5))
+    ax = fig.add_subplot(121)
+    ax.plot(data.history["accuracy"], "r-", label="Accuracy")
+    ax.plot(data.history["val_accuracy"], "b-", label="val Accuracy")
+    ax.grid(True)
+    plt.legend()
+    ax = fig.add_subplot(122)
+    ax.plot(data.history["loss"], "r-", label="Loss")
+    ax.plot(data.history["val_loss"], "b-", label="val Loss")
+    ax.grid(True)
+    plt.legend()
+    plt.savefig("Neural Network performance")
+
+
+
+
+
+
