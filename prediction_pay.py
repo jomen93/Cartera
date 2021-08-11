@@ -13,12 +13,16 @@ import numpy as np
 import warnings
 import pickle5 as pickle
 from tensorflow.keras.callbacks import ModelCheckpoint
-import matplotlib.pyplot as plt 
+import tensorflow as tf
+import matplotlib.pyplot as plt
+plt.style.use('classic')
+tf.get_logger().setLevel("ERROR")
 warnings.filterwarnings("ignore")
 
 import Data_cleaning
 import parameter_reduction
 import models 
+import metrics
 
 # Flag to download the data
 download_data = False
@@ -87,29 +91,50 @@ saving_callback = ModelCheckpoint( "model.ckpt", save_weights_only = True, verbo
 
 hist_train = timer_model.fit( x = X_train_pca, y = Y_train_fin,
                              validation_data = [X_test_pca, Y_test_fin], batch_size = 128,
-                             epochs = 100, callbacks = [saving_callback] )
+                             epochs = 500, callbacks = [saving_callback] )
 
-fig = plt.figure(figsize=(15,5))
-ax = fig.add_subplot(121)
-ax.plot( hist_train.history['loss'], "r-", label="loss")
-ax.plot( hist_train.history['val_loss'], "b-", label="val loss")
-ax.grid(True)
-plt.legend()
-ax2 = fig.add_subplot(122)
-ax2.plot( hist_train.history['accuracy'], label="Accuracy")
-ax2.plot( hist_train.history['val_accuracy'], label="val Accuracy")
-ax2.grid(True)
-plt.legend()
+# save performance curves
+print("saving performance curves ...")
+metrics.performance_curve(hist_train)
+
+
+# prediction over contract
+
+all_dates = Id_test.merge( data[['ID_FECHA_CONSULTADA', 'NUMERO_CONTRATO', 'FECHA_REGISTRO_CARTERA', 'FECHA_COBRO',
+              'FECHA_PAGO', 'FECHA_RECAUDO', 'FECHA_INICIO_CONTRATO']], how = 'left' )
+
+all_dates[ 'CHARGEDAY' ] = (all_dates['FECHA_COBRO'] - all_dates['FECHA_REGISTRO_CARTERA'])/np.timedelta64(1, 'D')
+
+some_contract = 1432
+real_drop = Y_test[ some_contract : some_contract + 1]['PAYDAY'].tolist()[0]
+proba_intime = timer_model.predict_proba( X_test_pca[some_contract : some_contract + 1] )[0]
+pred_drop = np.argmax( proba_intime )
+plt.figure(figsize=(30, 5))
+plt.plot(proba_intime, color = 'navy', label = 'dia probabilidad pago = {} '.format(pred_drop))
+plt.plot([real_drop, real_drop], [0, np.max(proba_intime)], color='limegreen', label='dia pago actual = {}'.format(real_drop))
+plt.legend(loc = 'best')
+plt.xticks( np.arange(0, 91, 1), rotation=90)
+plt.xlim( [0, 90] )
+plt.grid()
 plt.show()
 
+print("Making predictions ...")
+for ijk, some_contract in enumerate(range(X_test_pca.shape[0])):
 
+	proba_intime = list(timer_model.predict_proba( X_test_pca[some_contract : some_contract + 1] )[0])
+	date_axis = [ all_dates[some_contract:some_contract+1]['FECHA_REGISTRO_CARTERA'].tolist()[0]
+				 + np.timedelta64(some_num_day, 'D') for some_num_day in range( 91 ) ]
 
+	dis_contract = [ all_dates[ some_contract : some_contract + 1]['ID_CONTRATO'].tolist()[0] ]*len(date_axis)
 
+	result_a = pd.DataFrame(list( zip( dis_contract, date_axis, proba_intime ) ),
+							columns = ['ID_CONTRATO', 'FECHA_PREDICCION', 'PROBABILIDAD_PAGO'] )
 
+	if ijk == 0:
+		fin_result = result_a.copy()
+	else:
+		fin_result = pd.concat( [fin_result, result_a], axis = 0 )
 
-
-
-
-
-
+print("Saving csv ...")
+fin_result.to_csv('Probabilidad_de_Pago_.csv', index = False, encoding = 'utf-8')
 
