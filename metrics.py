@@ -1,3 +1,12 @@
+#  ===========================================================================
+#  @file:   metrics.py
+#  @brief:  Module to measure the metrics of the model
+#  @author: Johan Mendez
+#  @date:   06/06/2021
+#  @email:  johan.mendez@databiz.co
+#  @status: Debug
+#  @detail: version 1.0
+#  ===========================================================================
 import matplotlib.pyplot as plt
 import seaborn as sns 
 
