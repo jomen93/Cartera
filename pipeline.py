@@ -8,7 +8,6 @@
 #  @detail: version 1.0
 #  ===========================================================================
 
-
 from connect_database import connect
 import pandas as pd
 import pickle5 as pickle
