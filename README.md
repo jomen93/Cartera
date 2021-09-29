@@ -1,4 +1,7 @@
-![all text](images/data_image.jpeg)
+<p align="center">
+	<img src="images/databiz_image.jpeg" width="350" title="logotipo_repositorio">
+</p>
+
 
 # Cartera
 
