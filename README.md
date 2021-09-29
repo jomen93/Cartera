@@ -43,11 +43,11 @@ Para poder hacer pruebas, dado que no se pueda configurar eñl conector a la bas
 download_data = False
 ```
 
-Se presenta la matrix de confusión del resultado del código, en donde se evidencia el rendimiento de clasificación.
+Se presenta la matriz de confusión del resultado del código, en donde se evidencia el rendimiento de clasificación.
 
 
 <p align="center">
-	<img src="confusion:matrix.png" width="200" title="logotipo_repositorio">
+	<img src="confusion_matrix.png" width="200" title="matriz_confusion">
 </p>
 
 
