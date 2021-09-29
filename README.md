@@ -1,5 +1,5 @@
 <p align="center">
-	<img src="images/databiz_image.jpeg" width="350" title="logotipo_repositorio">
+	<img src="images/databiz_image.jpeg" width="200" title="logotipo_repositorio">
 </p>
 
 
@@ -13,4 +13,20 @@ Muchos de los expertos en el tema de recaudación de cartera (recolección de di
 
 ---
 
+Este código pretende responder dos preguntas fundamentales:
 
+1. ¿Quién va a incurrir en demora en el pago (Mora)?
+2. ¿Podría estimar la fecha de pago del cliente?
+
+## Clasificación - Mora
+
+Para hacer la predicción se utiliza la base de datos incrustada en el servidor de azure con las siguientes credenciales 
+
+```
+server   = "carterasvr.database.windows.net"
+database = "cartera"
+username = "consulta"
+password = D4t4b1z2.123 
+```
+
+esto con el fin de poder hacer la petición de la base de datos se hace necesario contactar con el administrador y registrar la ip desde la cual se va a hacer la peticion 
