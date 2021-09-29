@@ -47,7 +47,7 @@ Se presenta la matriz de confusión del resultado del código, en donde se evide
 
 
 <p align="center">
-	<img src="confusion_matrix.png" width="200" title="matriz_confusion">
+	<img src="confusion_matrix.png" width="500" title="matriz_confusion">
 </p>
 
 
