@@ -29,4 +29,26 @@ username = "consulta"
 password = "D4t4b1z2.123" 
 ```
 
-esto con el fin de poder hacer la petición de la base de datos se hace necesario contactar con el administrador y registrar la ip desde la cual se va a hacer la peticion 
+esto con el fin de poder hacer la petición de la base de datos. Se hace necesario contactar con el administrador y registrar la ip desde la cual se va a hacer la peticion. 
+
+Adicional a esto desde el computador que se este trabajando se debe tener instalado un driver para poder hacer la petición al servidor, de lo contrario el codigo no funcionará, de encontrarse un error relacionadorelacionar el "Issue" en l repositorio en este caso el driver utilizado fue:
+
+```python
+driver = "{ODBC Driver 17 for SQL Server}"
+```
+
+Para poder hacer pruebas, dado que no se pueda configurar eñl conector a la base de datos se proporciona un archivo binario que contiene la base de datos de entrenamiento "data.frt". Para esto la siguiente bandera debe estar:
+
+```python
+download_data = False
+```
+
+Se presenta la matrix de confusión del resultado del código, en donde se evidencia el rendimiento de clasificación.
+
+
+<p align="center">
+	<img src="confusion:matrix.png" width="200" title="logotipo_repositorio">
+</p>
+
+
+
