@@ -48,7 +48,7 @@ download_data = False
 Se hace una descripción básica de los datos tratando de obtener características importantes detrás de la información. En primer lugar se empieza con los datos sociales de los registros del conjunto de datos.
 
 <p align="center">
-	<img src="images/SEXO.png" width="200" title="logotipo_repositorio">
+	<img src="images/SEXO.png" width="600" title="logotipo_repositorio">
 </p>
 
 
