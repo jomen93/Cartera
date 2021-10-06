@@ -43,6 +43,15 @@ Para poder hacer pruebas, dado que no se pueda configurar eñl conector a la bas
 download_data = False
 ```
 
+### Estadística de los datos 
+
+Se hace una descripción básica de los datos tratando de obtener características importantes detrás de la información. En primer lugar se empieza con los datos sociales de los registros del conjunto de datos.
+
+<p align="center">
+	<img src="images/SEXO.png" width="200" title="logotipo_repositorio">
+</p>
+
+
 Se presenta la matriz de confusión del resultado del código, en donde se evidencia el rendimiento de clasificación.
 
 
