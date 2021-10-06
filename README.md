@@ -93,7 +93,7 @@ Tomando en cuenta la estadística <a href="https://www.codecogs.com/eqnedit.php?
 
 la **V de Cramér** se calcula tomando la raíz cuadrada de la estaídistica <a href="https://www.codecogs.com/eqnedit.php?latex=\chi^2" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\chi^2" title="\chi^2" /></a> dividad por el tamaño de la muestra y la dimension de los datos menos uno, de la siguiente manera
 
-<div>
+<div align="center">
 	<a href="https://www.codecogs.com/eqnedit.php?latex=V&space;=&space;\sqrt{\frac{\chi^{2}}{n\&space;\text{min}(k-1,&space;r-1)}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?V&space;=&space;\sqrt{\frac{\chi^{2}}{n\&space;\text{min}(k-1,&space;r-1)}}" title="V = \sqrt{\frac{\chi^{2}}{n\ \text{min}(k-1, r-1)}}" /></a>
 </div>
 
